@@ -1,0 +1,13 @@
+language: go
+install: 
+  - go get -v github.com/spf13/hugo
+  - git clone https://github.com/Vimux/blank.git themes/blank
+  - mkdir themes/blank/archetypes
+script:
+  - hugo
+  - python --version
+  - sudo pip install s3cmd
+  - s3cmd sync --delete-removed -P -M -D -r public/ s3://steventancheta.com/
+notifications:
+    email:
+        on_failure: always
